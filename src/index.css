@@ -980,8 +980,8 @@ body {
   font-size: 0.85rem;
   color: var(--text-secondary);
   position: absolute;
-  top: 20px;
-  right: 150px;
+  top: 90px;
+  right: 120px;
   white-space: nowrap;
   box-shadow: var(--shadow-md);
   animation: float-bubble 3s ease-in-out infinite;
