@@ -9,13 +9,42 @@ const CONTACT_INFO = [
 
 export default function Contact() {
     const [form, setForm] = useState({ name: '', email: '', message: '' })
-    const [submitted, setSubmitted] = useState(false)
+    const [status, setStatus] = useState('idle') // idle, submitting, success, error
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setSubmitted(true)
-        setTimeout(() => setSubmitted(false), 3000)
-        setForm({ name: '', email: '', message: '' })
+        setStatus('submitting')
+
+        const formspreeId = import.meta.env.VITE_FORMSPREE_ID
+
+        if (!formspreeId) {
+            console.error("VITE_FORMSPREE_ID is missing!")
+            setStatus('error')
+            setTimeout(() => setStatus('idle'), 3000)
+            return
+        }
+
+        try {
+            const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            })
+
+            if (response.ok) {
+                setStatus('success')
+                setForm({ name: '', email: '', message: '' })
+            } else {
+                setStatus('error')
+            }
+        } catch (error) {
+            console.error('Form submission error:', error)
+            setStatus('error')
+        }
+
+        setTimeout(() => setStatus('idle'), 4000)
     }
 
     return (
@@ -46,6 +75,7 @@ export default function Contact() {
                     <div className="form-group">
                         <input
                             type="text"
+                            name="name"
                             placeholder="Your Name"
                             id="contact-name"
                             value={form.name}
@@ -56,6 +86,7 @@ export default function Contact() {
                     <div className="form-group">
                         <input
                             type="email"
+                            name="email"
                             placeholder="Your Email"
                             id="contact-email"
                             value={form.email}
@@ -65,6 +96,7 @@ export default function Contact() {
                     </div>
                     <div className="form-group">
                         <textarea
+                            name="message"
                             placeholder="Your Message"
                             id="contact-message"
                             value={form.message}
@@ -72,8 +104,15 @@ export default function Contact() {
                             required
                         ></textarea>
                     </div>
-                    <button type="submit" className="btn btn--primary btn--submit">
-                        {submitted ? '✓ Message Sent!' : 'Send Message →'}
+                    <button
+                        type="submit"
+                        className="btn btn--primary btn--submit"
+                        disabled={status === 'submitting'}
+                    >
+                        {status === 'submitting' ? 'Sending...' :
+                            status === 'success' ? '✓ Message Sent!' :
+                                status === 'error' ? 'Error - Try again' :
+                                    'Send Message →'}
                     </button>
                 </form>
             </div>
