@@ -9,7 +9,7 @@ export default function About() {
                 <div className="about__image-wrapper">
                     <div className="about__image-glow"></div>
                     <div className="about__image" style={{
-                        background: 'linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(168, 85, 247, 0.2))',
+                        background: 'linear-gradient(135deg, rgba(217, 119, 87, 0.2), rgba(194, 137, 110, 0.2))',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',

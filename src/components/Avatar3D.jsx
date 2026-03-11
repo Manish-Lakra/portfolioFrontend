@@ -27,9 +27,9 @@ export default function Avatar3D({ voiceState = 'idle', isMinimized = false }) {
                 <directionalLight
                     position={[-2, 3, -2]}
                     intensity={0.4}
-                    color="#a855f7"
+                    color="#C2896E"
                 />
-                <pointLight position={[0, 2, 3]} intensity={0.5} color="#00e5ff" />
+                <pointLight position={[0, 2, 3]} intensity={0.5} color="#D97757" />
 
                 <Suspense fallback={null}>
                     <AvatarModel voiceState={voiceState} />

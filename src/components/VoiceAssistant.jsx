@@ -218,15 +218,15 @@ export default function VoiceAssistant() {
             {/* Floating Avatar Button */}
             {!isOpen && (
                 <div className="voice-assistant">
-                    <div className="avatar-chat-bubble">
-                        Try talking to Manish!
-                    </div>
                     <button
                         className={`voice-btn voice-btn--avatar ${stateClass[state]}`}
                         onClick={handleMicClick}
                         aria-label={stateLabel[state]}
                         title={stateLabel[state]}
                     >
+                        <div className="avatar-chat-bubble">
+                            Try talking to Manish!
+                        </div>
                         <div className="mini-avatar-wrapper">
                             <Avatar3D voiceState={state} isMinimized={true} />
                         </div>
