@@ -981,7 +981,7 @@ body {
   color: var(--text-secondary);
   position: absolute;
   top: 90px;
-  right: 120px;
+  right: 195px;
   white-space: nowrap;
   box-shadow: var(--shadow-md);
   animation: float-bubble 3s ease-in-out infinite;
@@ -1015,7 +1015,7 @@ body {
 }
 
 .voice-btn--avatar {
-  width: 200px;
+  width: 350px;
   height: 350px;
   padding: 0;
   background: transparent;

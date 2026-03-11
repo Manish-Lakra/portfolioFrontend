@@ -6,7 +6,7 @@ import AvatarModel from './AvatarModel'
 export default function Avatar3D({ voiceState = 'idle', isMinimized = false }) {
     // Dynamic camera framing based on size
     // Minimized: Show whole body standing playfully, zoomed in
-    const camPos = isMinimized ? [0, 0.9, 2.5] : [0, 1.15, 0.75]
+    const camPos = isMinimized ? [0, 0.9, 3.2] : [0, 1.15, 0.75]
     const camFov = isMinimized ? 40 : 45
     const camTarget = isMinimized ? [0, 0.8, 0] : [0, 0.95, 0]
 
