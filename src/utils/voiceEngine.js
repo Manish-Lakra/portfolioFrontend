@@ -5,7 +5,7 @@
  * Also supports text input as fallback.
  */
 
-const API_URL = '/api/chat'
+const API_URL = `${import.meta.env.VITE_API_URL || ''}/api/chat`
 
 class VoiceEngine {
     constructor() {
