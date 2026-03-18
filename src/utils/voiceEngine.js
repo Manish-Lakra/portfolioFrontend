@@ -11,6 +11,7 @@ class VoiceEngine {
     constructor() {
         this.recognition = null
         this.synthesis = window.speechSynthesis
+        this.currentAudio = null
         this.state = 'idle' // idle | listening | processing | speaking
         this.onStateChange = null
         this.onTranscript = null
@@ -124,6 +125,10 @@ class VoiceEngine {
             this.recognition.stop() // This triggers onend which processes transcript
         } else if (this.state === 'speaking') {
             this.synthesis.cancel()
+            if (this.currentAudio) {
+                this.currentAudio.pause()
+                this.currentAudio = null
+            }
             this._setState('idle')
         }
     }
@@ -237,12 +242,70 @@ class VoiceEngine {
         if (url) window.open(url, '_blank', 'noopener,noreferrer')
     }
 
-    _speak(text) {
-        return new Promise((resolve) => {
-            if (!text) { resolve(); return }
+    async _speak(text) {
+        if (!text) return
 
+        if (this.currentAudio) {
+            this.currentAudio.pause()
+            this.currentAudio = null
+        }
+        
+        this._setState('speaking')
+
+        const apiKey = import.meta.env.VITE_GOOGLE_STT_API_KEY || import.meta.env.VITE_GOOGLE_API_KEY
+        if (!apiKey) {
+            console.warn('[Voice] Google API key not found, falling back to browser TTS')
+            return this._browserSpeak(text)
+        }
+
+        try {
+            const response = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    input: { text },
+                    voice: { languageCode: 'en-US', name: 'en-US-Journey-D' },
+                    audioConfig: { audioEncoding: 'MP3' }
+                })
+            })
+
+            if (!response.ok) {
+                console.warn('[Voice] Google TTS API failed, falling back to browser TTS')
+                return this._browserSpeak(text)
+            }
+
+            const data = await response.json()
+            const audioSrc = `data:audio/mp3;base64,${data.audioContent}`
+            
+            return new Promise((resolve) => {
+                const audio = new Audio(audioSrc)
+                this.currentAudio = audio
+
+                audio.onended = () => {
+                    this.currentAudio = null
+                    resolve()
+                }
+                audio.onerror = () => {
+                    this.currentAudio = null
+                    resolve()
+                }
+                
+                audio.play().catch(err => {
+                    console.error('[Voice] Audio play error:', err)
+                    this.currentAudio = null
+                    resolve()
+                })
+            })
+
+        } catch (error) {
+            console.error('[Voice] Error in Google TTS, falling back:', error)
+            return this._browserSpeak(text)
+        }
+    }
+
+    _browserSpeak(text) {
+        return new Promise((resolve) => {
             this.synthesis.cancel()
-            this._setState('speaking')
 
             const utt = new SpeechSynthesisUtterance(text)
             utt.rate = 1.0
@@ -250,7 +313,7 @@ class VoiceEngine {
 
             const voices = this.synthesis.getVoices()
             const voice = voices.find(v =>
-                v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Alex'))
+                v.lang.startsWith('en') && (v.name.includes('Google UK English Male') || v.name.includes('Daniel') || v.name.includes('Alex') || v.name.includes('Male'))
             ) || voices.find(v => v.lang.startsWith('en'))
             if (voice) utt.voice = voice
 
