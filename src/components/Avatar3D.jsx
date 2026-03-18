@@ -6,7 +6,7 @@ import AvatarModel from './AvatarModel'
 export default function Avatar3D({ voiceState = 'idle', isMinimized = false }) {
     // Dynamic camera framing based on size
     // Minimized: Show whole body standing playfully, zoomed in
-    const camPos = isMinimized ? [0, 0.9, 3.2] : [0, 1.15, 0.75]
+    const camPos = isMinimized ? [0, 0.9, 2.5] : [0, 1.15, 0.75]
     const camFov = isMinimized ? 40 : 45
     const camTarget = isMinimized ? [0, 0.8, 0] : [0, 0.95, 0]
 
@@ -32,7 +32,7 @@ export default function Avatar3D({ voiceState = 'idle', isMinimized = false }) {
                 <pointLight position={[0, 2, 3]} intensity={0.5} color="#D97757" />
 
                 <Suspense fallback={null}>
-                    <AvatarModel voiceState={voiceState} isMinimized={isMinimized} />
+                    <AvatarModel voiceState={voiceState} />
                     <ContactShadows
                         position={[0, -1.65, 0]}
                         opacity={0.4}
