@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Experience from './components/Experience'
+import Products from './components/Products'
 import Education from './components/Education'
 import Awards from './components/Awards'
 import Contact from './components/Contact'
@@ -49,6 +50,7 @@ export default function App() {
                 <About />
                 <Skills />
                 <Experience />
+                <Products />
                 <Education />
                 <Awards />
                 <Contact />
