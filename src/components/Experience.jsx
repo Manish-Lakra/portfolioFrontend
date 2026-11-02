@@ -32,38 +32,35 @@ const EXPERIENCE = [
 
 export default function Experience() {
     return (
-        <section className="section" id="experience">
-            <span className="section__label">Experience</span>
-            <h2 className="section__title">
-                Where I've <span>Built</span>
-            </h2>
-            <div className="timeline">
-                {EXPERIENCE.map((exp, i) => (
-                    <div className="timeline__item" key={i}>
-                        <div className="timeline__dot"></div>
-                        <div className="glass-card">
-                            <div className="timeline__header">
+        <section className="sect band-lav section" id="experience">
+            <div className="wrap">
+                <p className="eyebrow">Experience</p>
+                <h2>Where I've <span className="slab slab-mint">built</span></h2>
+                <ol className="timeline">
+                    {EXPERIENCE.map((exp, i) => (
+                        <li className="job" key={i}>
+                            <div className={`jobhead ${i === 0 ? 'bg-pink' : 'bg-sky'}`}>
                                 <div>
-                                    <div className="timeline__role">{exp.role}</div>
-                                    <div className="timeline__company">
-                                        {exp.company}{exp.location ? ` • ${exp.location}` : ''}
+                                    <h3>{exp.role}</h3>
+                                    <div className="co">
+                                        {exp.company}{exp.location ? ` · ${exp.location}` : ''}
                                     </div>
                                 </div>
-                                <span className="timeline__date">{exp.date}</span>
+                                <span className="when">{exp.date}</span>
                             </div>
-                            <ul className="timeline__points">
-                                {exp.points.map((point, j) => (
-                                    <li key={j}>{point}</li>
-                                ))}
-                            </ul>
-                            {exp.highlight && (
-                                <div className="timeline__highlight">
-                                    ✦ {exp.highlight}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                ))}
+                            <div className="jobbody">
+                                <ul>
+                                    {exp.points.map((point, j) => (
+                                        <li key={j}>{point}</li>
+                                    ))}
+                                </ul>
+                                {exp.highlight && (
+                                    <div className="highlight">✦ {exp.highlight}</div>
+                                )}
+                            </div>
+                        </li>
+                    ))}
+                </ol>
             </div>
         </section>
     )

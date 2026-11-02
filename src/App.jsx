@@ -33,14 +33,6 @@ export default function App() {
 
     return (
         <>
-            {/* Animated background */}
-            <div className="app-background">
-                <div className="bg-orb bg-orb--1"></div>
-                <div className="bg-orb bg-orb--2"></div>
-                <div className="bg-orb bg-orb--3"></div>
-            </div>
-            <div className="bg-grid"></div>
-
             {/* Navigation */}
             <Navbar />
 
@@ -57,13 +49,17 @@ export default function App() {
             </main>
 
             {/* Footer */}
-            <footer className="footer">
-                <p>
-                    © 2024 Manish Lakra · Built with ❤️ and Voice AI ·{' '}
-                    <a href="https://www.linkedin.com/in/manish-lakra-106b6492/" target="_blank" rel="noopener noreferrer">
-                        LinkedIn
-                    </a>
-                </p>
+            <footer className="foot">
+                <div className="wrap footin">
+                    <span className="mono sm" aria-hidden="true">M</span>
+                    <p>
+                        © {new Date().getFullYear()} Manish Lakra <span>·</span>{' '}
+                        <a href="https://www.linkedin.com/in/manish-lakra-106b6492/" target="_blank" rel="noopener noreferrer">
+                            LinkedIn
+                        </a>
+                    </p>
+                    <p className="quiet">Built with React and a voice AI you can talk to.</p>
+                </div>
             </footer>
 
             {/* Voice Assistant (floating) */}

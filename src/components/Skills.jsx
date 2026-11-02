@@ -61,33 +61,28 @@ const SKILLS = [
     },
 ]
 
+const COLORS = ['var(--lav)', 'var(--pink)', 'var(--mint)', 'var(--sky)', 'var(--peach)']
+
 export default function Skills() {
     return (
-        <section className="section" id="skills">
-            <span className="section__label">Skills</span>
-            <h2 className="section__title">
-                Tools of the <span>Trade</span>
-            </h2>
-            <div className="skills__grid">
-                {SKILLS.map((skill, i) => (
-                    <div
-                        className="glass-card skill-card"
-                        key={skill.name}
-                        style={{ animationDelay: `${i * 0.05}s` }}
-                    >
-                        <div className="skill-card__icon">{skill.icon}</div>
-                        <div className="skill-card__info">
-                            <div className="skill-card__name">{skill.name}</div>
-                            <div className="skill-card__description">{skill.description}</div>
-                            <div className="skill-card__bar">
-                                <div
-                                    className="skill-card__bar-fill"
-                                    style={{ width: `${skill.level}%` }}
-                                ></div>
+        <section className="sect band-yellow section" id="skills">
+            <div className="wrap">
+                <p className="eyebrow">Skills</p>
+                <h2>Tools of the <span className="slab">trade</span></h2>
+                <div className="skillgrid">
+                    {SKILLS.map((skill, i) => (
+                        <div className="skill" key={skill.name}>
+                            <span className="badge" aria-hidden="true">{skill.icon}</span>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <h3>{skill.name}</h3>
+                                <p>{skill.description}</p>
+                                <div className="meter">
+                                    <i style={{ width: `${skill.level}%`, background: COLORS[i % COLORS.length] }}></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </section>
     )

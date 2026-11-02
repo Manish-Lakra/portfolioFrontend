@@ -19,22 +19,24 @@ const AWARDS = [
     },
 ]
 
+const COLORS = ['bg-lav', 'bg-pink', 'bg-yellow']
+
 export default function Awards() {
     return (
-        <section className="section" id="awards">
-            <span className="section__label">Recognition</span>
-            <h2 className="section__title">
-                Awards & <span>Achievements</span>
-            </h2>
-            <div className="awards__grid">
-                {AWARDS.map((award, i) => (
-                    <div className="glass-card award-card" key={i}>
-                        <div className="award-card__icon">{award.icon}</div>
-                        <div className="award-card__title">{award.title}</div>
-                        <div className="award-card__org">{award.org}</div>
-                        <div className="award-card__desc">{award.desc}</div>
-                    </div>
-                ))}
+        <section className="sect band-mint section" id="awards">
+            <div className="wrap">
+                <p className="eyebrow">Recognition</p>
+                <h2>Awards &amp; <span className="slab">achievements</span></h2>
+                <div className="cards3">
+                    {AWARDS.map((award, i) => (
+                        <article className={`tile ${COLORS[i % COLORS.length]}`} key={i}>
+                            <span className="badge" aria-hidden="true">{award.icon}</span>
+                            <p className="org">{award.org}</p>
+                            <h3>{award.title}</h3>
+                            <p>{award.desc}</p>
+                        </article>
+                    ))}
+                </div>
             </div>
         </section>
     )

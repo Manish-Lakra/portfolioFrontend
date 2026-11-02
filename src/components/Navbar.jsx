@@ -11,15 +11,8 @@ const NAV_ITEMS = [
 ]
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [activeSection, setActiveSection] = useState('')
-
-    useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 50)
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -48,28 +41,34 @@ export default function Navbar() {
     }
 
     return (
-        <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-            <a href="#" className="navbar__logo">ML.</a>
-            <button
-                className="navbar__mobile-toggle"
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
-            >
-                {mobileOpen ? '✕' : '☰'}
-            </button>
-            <ul className={`navbar__links ${mobileOpen ? 'navbar__links--open' : ''}`}>
-                {NAV_ITEMS.map(({ id, label }) => (
-                    <li key={id}>
-                        <a
-                            href={`#${id}`}
-                            className={`navbar__link ${activeSection === id ? 'navbar__link--active' : ''}`}
-                            onClick={(e) => handleClick(e, id)}
-                        >
-                            {label}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </nav>
+        <header className="top">
+            <div className="wrap topin">
+                <a className="brand" href="#" aria-label="Manish Lakra, home">
+                    <span className="mono" aria-hidden="true">M</span>
+                    <span className="brandname">Manish Lakra</span>
+                </a>
+                <button
+                    className="navtoggle"
+                    onClick={() => setMobileOpen(!mobileOpen)}
+                    aria-label="Toggle menu"
+                    aria-expanded={mobileOpen}
+                >
+                    {mobileOpen ? '✕' : '☰'}
+                </button>
+                <ul className={`nav ${mobileOpen ? 'is-open' : ''}`}>
+                    {NAV_ITEMS.map(({ id, label }) => (
+                        <li key={id}>
+                            <a
+                                href={`#${id}`}
+                                className={activeSection === id ? 'is-active' : ''}
+                                onClick={(e) => handleClick(e, id)}
+                            >
+                                {label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </header>
     )
 }

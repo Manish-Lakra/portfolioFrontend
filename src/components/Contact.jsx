@@ -48,73 +48,82 @@ export default function Contact() {
     }
 
     return (
-        <section className="section" id="contact">
-            <span className="section__label">Contact</span>
-            <h2 className="section__title">
-                Let's <span>Connect</span>
-            </h2>
-            <div className="contact__content">
-                <div className="contact__info">
-                    {CONTACT_INFO.map((item, i) => (
-                        <div className="contact__item" key={i}>
-                            <div className="contact__item-icon">{item.icon}</div>
-                            <div>
-                                <div className="contact__item-label">{item.label}</div>
-                                <div className="contact__item-value">
-                                    {item.href ? (
-                                        <a href={item.href} target={item.href.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
-                                            {item.value}
-                                        </a>
-                                    ) : item.value}
+        <section className="sect band-pink section" id="contact">
+            <div className="wrap">
+                <p className="eyebrow">Contact</p>
+                <h2>Let's <span className="slab">connect</span></h2>
+                <div className="contactgrid">
+                    <ul className="cinfo">
+                        {CONTACT_INFO.map((item, i) => (
+                            <li key={i}>
+                                <span className="badge" aria-hidden="true">{item.icon}</span>
+                                <div style={{ minWidth: 0 }}>
+                                    <div className="clabel">{item.label}</div>
+                                    <div className="cval">
+                                        {item.href ? (
+                                            <a href={item.href} target={item.href.startsWith('http') ? '_blank' : '_self'} rel="noopener noreferrer">
+                                                {item.value}
+                                            </a>
+                                        ) : item.value}
+                                    </div>
                                 </div>
-                            </div>
+                            </li>
+                        ))}
+                    </ul>
+                    <form className="form" onSubmit={handleSubmit} id="contact-form">
+                        <div className="bar">
+                            <span className="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                            new message
                         </div>
-                    ))}
+                        <div className="formbody">
+                            <div>
+                                <label htmlFor="contact-name">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Your name"
+                                    id="contact-name"
+                                    value={form.name}
+                                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="contact-email">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="you@example.com"
+                                    id="contact-email"
+                                    value={form.email}
+                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="contact-message">Message</label>
+                                <textarea
+                                    name="message"
+                                    placeholder="What are you building?"
+                                    id="contact-message"
+                                    value={form.message}
+                                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                                    required
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                className="btn btn-ink"
+                                disabled={status === 'submitting'}
+                            >
+                                {status === 'submitting' ? 'Sending...' :
+                                    status === 'success' ? '✓ Message sent!' :
+                                        status === 'error' ? 'Error - try again' :
+                                            'Send message →'}
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <form className="contact__form" onSubmit={handleSubmit} id="contact-form">
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your Name"
-                            id="contact-name"
-                            value={form.name}
-                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Your Email"
-                            id="contact-email"
-                            value={form.email}
-                            onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <textarea
-                            name="message"
-                            placeholder="Your Message"
-                            id="contact-message"
-                            value={form.message}
-                            onChange={(e) => setForm({ ...form, message: e.target.value })}
-                            required
-                        ></textarea>
-                    </div>
-                    <button
-                        type="submit"
-                        className="btn btn--primary btn--submit"
-                        disabled={status === 'submitting'}
-                    >
-                        {status === 'submitting' ? 'Sending...' :
-                            status === 'success' ? '✓ Message Sent!' :
-                                status === 'error' ? 'Error - Try again' :
-                                    'Send Message →'}
-                    </button>
-                </form>
             </div>
         </section>
     )
